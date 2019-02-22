@@ -1,5 +1,6 @@
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin')
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const moduleObj = {
   rules: [
@@ -9,19 +10,25 @@ const moduleObj = {
       loaders: ["babel-loader"],
     },
     {
-      test: /\.sass$/,
-      loader: [
-        require.resolve('style-loader'),
-        require.resolve('css-loader'),
-        require.resolve('sass-loader')
+      test: /\.(sa|sc|c)ss$/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        'css-loader',
+        'sass-loader'
       ]
     },
     {
-      exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.scss$/, /\.sass$/],
-      loader: require.resolve('file-loader'),
-      options: {
-        name: 'static/media/[name].[hash:8].[ext]',
-      },
+      test: /\.(png|jpg|gif)$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'dist/assets',
+            publicPath: 'dist/assets'
+          },
+        },
+      ],
     },
   ],
 };
@@ -42,6 +49,10 @@ module.exports = {
   },
   module: moduleObj,
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    }),
     new HtmlWebPackPlugin({
       template: 'src/client/index.html'
     })
