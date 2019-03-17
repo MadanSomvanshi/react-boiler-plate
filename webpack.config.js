@@ -6,8 +6,11 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const moduleObj = {
   rules: [
     {
-      test: /\.js$/,
+      test: /\.(js|jsx)$/,
       exclude: /node_modules/,
+      resolve: {
+        extensions: [".js", ".jsx"]
+      },
       loaders: ["babel-loader"],
     },
     {
@@ -19,7 +22,7 @@ const moduleObj = {
       ]
     },
     {
-      test: /\.(png|jpg|gif)$/,
+      test: /\.(png|jpg|gif|svg)$/,
       use: [
         {
           loader: 'file-loader',
@@ -58,8 +61,7 @@ module.exports = {
       template: 'src/client/index.html'
     }),
     new CopyWebpackPlugin([
-      { from: 'src/client/assets/images', to: 'assets/images' },
-      { from: 'src/client/assets/files', to: 'assets/files' }
+      { from: 'src/client/assets/images', to: 'assets/images' }
     ])
   ],
   mode: 'development',

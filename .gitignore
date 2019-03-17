@@ -4,5 +4,5 @@ node_modules/
 .idea/
 # Project
 dist/
-# Package.json-lock
+package.json
 package-lock.json
