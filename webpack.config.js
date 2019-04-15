@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const moduleObj = {
   rules: [
     {
@@ -40,6 +40,12 @@ const moduleObj = {
 module.exports = {
   entry: {
     'client': './src/client/index.js',
+  },
+  optimization: {
+    minimizer: [new UglifyJsPlugin({
+      sourceMap: true,
+      parallel: 4
+    })],
   },
   target: 'web',
   output: {
