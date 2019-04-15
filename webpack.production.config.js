@@ -3,6 +3,8 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const WebpackProvideGlobalPlugin = require('webpack-provide-global-plugin');
+var webpack = require('webpack');
 
 const moduleObj = {
   rules: [
@@ -42,6 +44,9 @@ module.exports = {
   entry: {
     'client': './src/client/index.js',
   },
+  resolve: {
+    extensions: ['.js', '.sass', '.scss', '.css', '.json', 'jsx']
+  },
   optimization: {
     minimizer: [new UglifyJsPlugin({
       sourceMap: true,
@@ -69,7 +74,13 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: 'src/client/assets/images', to: 'assets/images' }
-    ])
+    ]),
+    new webpack.ProvidePlugin({
+      'React': 'react',
+      'ReactDOM': 'react-dom',
+      'reactstrap': 'reactstrap'
+    })
   ],
   mode: 'production',
 };
+
