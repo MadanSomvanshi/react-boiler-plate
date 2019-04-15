@@ -71,6 +71,5 @@ module.exports = {
       { from: 'src/client/assets/images', to: 'assets/images' }
     ])
   ],
-  mode: 'development',
+  mode: 'production',
 };
-
