@@ -3,8 +3,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const WebpackProvideGlobalPlugin = require('webpack-provide-global-plugin');
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 const moduleObj = {
   rules: [
@@ -12,7 +11,7 @@ const moduleObj = {
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
       resolve: {
-        extensions: [".js", ".jsx"]
+        extensions: [".js", ".jsx", ".sass", "scss", ".css"]
       },
       loaders: ["babel-loader"],
     },
@@ -21,7 +20,7 @@ const moduleObj = {
       use: [
         MiniCssExtractPlugin.loader,
         'css-loader',
-        'sass-loader'
+        'sass-loader',
       ]
     },
     {
@@ -44,9 +43,6 @@ module.exports = {
   entry: {
     'client': './src/client/index.js',
   },
-  resolve: {
-    extensions: ['.js', '.sass', '.scss', '.css', '.json', 'jsx']
-  },
   optimization: {
     minimizer: [new UglifyJsPlugin({
       sourceMap: true,
@@ -57,7 +53,7 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: 'dist',
+    publicPath: '/',
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
